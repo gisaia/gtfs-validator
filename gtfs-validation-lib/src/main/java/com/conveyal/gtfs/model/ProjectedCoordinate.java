@@ -1,9 +1,9 @@
 package com.conveyal.gtfs.model;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.opengis.referencing.operation.MathTransform;
 
 import com.conveyal.gtfs.service.GeoUtils;
-import com.vividsolutions.jts.geom.Coordinate;
 
 public class ProjectedCoordinate extends Coordinate {
 

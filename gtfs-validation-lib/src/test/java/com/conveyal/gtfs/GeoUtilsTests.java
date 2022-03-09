@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import com.conveyal.gtfs.model.ProjectedCoordinate;
 import com.conveyal.gtfs.service.GeoUtils;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 
 import junit.framework.Assert;
- 
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+
 public class GeoUtilsTests {
 
 	@Test

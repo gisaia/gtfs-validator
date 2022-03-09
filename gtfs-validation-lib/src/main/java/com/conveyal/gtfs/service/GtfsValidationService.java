@@ -11,15 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.index.strtree.STRtree;
 import org.onebusaway.gtfs.impl.GtfsRelationalDaoImpl;
-import org.onebusaway.gtfs.model.AgencyAndId;
-import org.onebusaway.gtfs.model.Route;
-import org.onebusaway.gtfs.model.ServiceCalendar;
-import org.onebusaway.gtfs.model.ServiceCalendarDate;
-import org.onebusaway.gtfs.model.ShapePoint;
-import org.onebusaway.gtfs.model.Stop;
-import org.onebusaway.gtfs.model.StopTime;
-import org.onebusaway.gtfs.model.Trip;
+import org.onebusaway.gtfs.model.*;
 
 import com.conveyal.gtfs.model.BlockInterval;
 import com.conveyal.gtfs.model.DuplicateStops;
@@ -31,10 +28,6 @@ import com.conveyal.gtfs.model.ValidationResult;
 import com.conveyal.gtfs.model.comparators.BlockIntervalComparator;
 import com.conveyal.gtfs.model.comparators.StopTimeComparator;
 import com.conveyal.gtfs.service.impl.GtfsStatisticsService;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.index.strtree.STRtree;
 
 public class GtfsValidationService {
 
@@ -392,7 +385,7 @@ public class GtfsValidationService {
 	/**
 	 * Returns a list of coincident DuplicateStops. 
 	 * 
-	 * @param the buffer distance for two stops to be considered duplicate
+	 * @param bufferDistance the buffer distance for two stops to be considered duplicate
 	 * 
 	 */
 	public ValidationResult duplicateStops(Double bufferDistance)  {
@@ -512,7 +505,7 @@ public class GtfsValidationService {
 
 					// if any stop is more than minDistance, add to ValidationResult 
 					for (StopTime stopTime : stopTimes){
-						stop = stopTime.getStop();
+						stop = gtfsDao.getStopForId(stopTime.getStop().getId());
 
 						try{
 							stopGeom = GeoUtils.getGeometryFromCoordinate(
@@ -628,8 +621,10 @@ public class GtfsValidationService {
 			firstShapeCoord = null;
 			lastShapeCoord = null;
 			try {
-				firstStopCoord = new Coordinate(firstStop.getStop().getLat(), firstStop.getStop().getLon());
-				lastStopCoord = new Coordinate(lastStop.getStop().getLat(), lastStop.getStop().getLon());
+				Stop first = gtfsDao.getStopForId(firstStop.getStop().getId());
+				Stop last = gtfsDao.getStopForId(lastStop.getStop().getId());
+				firstStopCoord = new Coordinate(first.getLat(), first.getLon());
+				lastStopCoord = new Coordinate(last.getLat(), last.getLon());
 
 				firstStopGeom = geometryFactory.createPoint(GeoUtils.convertLatLonToEuclidean(firstStopCoord));
 				lastStopGeom = geometryFactory.createPoint(GeoUtils.convertLatLonToEuclidean(lastStopCoord));

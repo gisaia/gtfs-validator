@@ -1,6 +1,8 @@
-language: java
-jdk: oraclejdk8
+language: bash
 
-cache:
-  directories:
-   - $HOME/.m2
+sudo: required
+
+services:
+  - docker
+
+script: docker run --rm -w /opt/maven -v $PWD:/opt/maven -v $HOME/.m2:/root/.m2 maven:3.8.4-openjdk-17 mvn clean install

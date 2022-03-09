@@ -8,6 +8,10 @@ import org.geotools.geometry.GeometryBuilder;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.onebusaway.gtfs.model.ShapePoint;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchIdentifierException;
@@ -18,10 +22,6 @@ import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
 import com.conveyal.gtfs.model.ProjectedCoordinate;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.PrecisionModel;
 
  public class GeoUtils {
 	public static double RADIANS = 2 * Math.PI;
